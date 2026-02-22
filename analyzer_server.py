@@ -13,6 +13,7 @@ log_file = "logs.txt"
 
 lock = threading.Lock()
 
+
 def handle_client(client_socket, addr):
     global request_count
 
@@ -27,10 +28,9 @@ def handle_client(client_socket, addr):
 
     with lock:
         request_count += 1
-        if path not in path_stats:
-            path_stats[path] = 0
-        path_stats[path] += 1
+        path_stats[path] = path_stats.get(path, 0) + 1
 
+    # Log entry
     log_entry = {
         "time": str(datetime.now()),
         "ip": addr[0],
@@ -51,17 +51,20 @@ def handle_client(client_socket, addr):
             "Content-Type: text/html\r\n\r\n"
             + response_body
         )
+
     elif path == "/stats":
         stats_html = "<h1>Server Stats</h1>"
         stats_html += f"<p>Total Requests: {request_count}</p><ul>"
         for p, count in path_stats.items():
             stats_html += f"<li>{p} : {count}</li>"
         stats_html += "</ul>"
+
         response = (
             "HTTP/1.1 200 OK\r\n"
             "Content-Type: text/html\r\n\r\n"
             + stats_html
         )
+
     elif path == "/logs":
         try:
             with open(log_file, "r", encoding="utf-8") as f:
@@ -74,6 +77,7 @@ def handle_client(client_socket, addr):
             "Content-Type: application/json\r\n\r\n"
             + logs
         )
+
     else:
         response_body = f"<h1>Merhaba Mahir 😎</h1><p>Girdigin path: {path}</p>"
         response = (
