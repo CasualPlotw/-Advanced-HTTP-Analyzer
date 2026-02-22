@@ -1,26 +1,62 @@
-# Advanced HTTP Analyzer
+# Advanced HTTP Analyzer 🚀
 
-A multi-threaded HTTP server built using Python sockets.
+A multi-threaded HTTP analyzer built using raw Python sockets.
 
-## Features
+This project demonstrates low-level HTTP request handling, logging, and basic route management without using any external web frameworks.
 
-- Multi-threaded request handling
-- Live request statistics
-- Path-based analytics
-- 403 Forbidden path blocking
-- JSON log export
-- File-based logging system
+---
 
-## Endpoints
+## 🔥 Features
+
+- Multi-threaded client handling
+- Raw HTTP request parsing
+- JSON-based request logging
+- Path statistics tracking
+- 403 Forbidden route blocking
+- Live server stats endpoint
+- Log export endpoint
+
+---
+
+## 📦 Endpoints
 
 | Endpoint | Description |
 |----------|------------|
-| `/` | Basic response |
-| `/stats` | Shows live request statistics |
-| `/logs` | Returns JSON logs |
-| `/admin` | Blocked (403 Forbidden) |
+| `/` | Default welcome page |
+| `/stats` | Shows total request count and path statistics |
+| `/logs` | Returns all logs in JSON format |
+| `/admin` | Blocked route (returns 403 Forbidden) |
 
-## How to Run
+---
+
+## 🛠 Technologies Used
+
+- Python
+- socket
+- threading
+- datetime
+- json
+
+---
+
+## ▶️ How to Run
 
 ```bash
 python analyzer_server.py
+```
+
+Server runs on:
+
+http://127.0.0.1:8080
+
+---
+
+## 📊 Example Log Entry
+
+```json
+{
+  "time": "2026-02-22 09:07:18.340123",
+  "ip": "127.0.0.1",
+  "method": "GET",
+  "path": "/stats"
+}
